@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>济州岛4-5月旅行攻略</title>
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --blue: #4ecdc4;
+    --orange: #ff9f43;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #2d3436;
+    --muted: #636e72;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%);
+    margin: 0 -16px;
+    padding: 48px 24px 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .hero h1 { font-size: 28px; text-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .hero p { margin-top: 8px; font-size: 14px; opacity: 0.9; }
+  .section { margin-top: 24px; }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 12px 0;
+    border-bottom: 3px solid var(--pink);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .card h3 {
+    font-size: 15px;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+  .card p, .card li { font-size: 14px; color: var(--text); }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 4px; }
+  .tag {
+    display: inline-block;
+    background: #fff0f3;
+    color: var(--pink);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin: 2px 4px 2px 0;
+  }
+  .tag.blue { background: #e8fffe; color: var(--blue); }
+  .tag.orange { background: #fff5eb; color: var(--orange); }
+  .day-badge {
+    display: inline-block;
+    background: var(--pink);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .day-row { display: flex; align-items: flex-start; margin-bottom: 12px; }
+  .day-content { flex: 1; }
+  .day-content strong { font-size: 14px; }
+  .day-content span { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
+  .warn {
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .cherry-spot { display: flex; align-items: flex-start; margin-bottom: 10px; }
+  .cherry-num {
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    color: #fff;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .cherry-detail { flex: 1; }
+  .cherry-detail strong { font-size: 14px; }
+  .cherry-detail p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cost-table th { text-align: left; padding: 8px; background: #fff0f3; color: var(--pink); border-radius: 6px; }
+  .cost-table td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+  .checklist li::before { content: "✅ "; }
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .accordion { cursor: pointer; user-select: none; }
+  .accordion-content { display: none; padding-top: 8px; }
+  .accordion-content.open { display: block; }
+  .accordion::after { content: " ▼"; font-size: 10px; }
+  .accordion.open::after { content: " ▲"; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>济州岛 4-5月攻略</h1>
+  <p>综合小红书6篇高赞笔记 + 500+条评论整理</p>
+  <p style="margin-top:4px; font-size:12px;">2026.03.29 by 小胖</p>
+</div>
+
+<div class="section">
+  <div class="section-title">📅 最佳时间</div>
+  <div class="card">
+    <h3>4月天气速查</h3>
+    <ul>
+      <li><strong>4月初 (1-8日)</strong> — 最完美！持续晴朗 13-24°C，樱花+油菜花同时盛开</li>
+      <li><strong>4月中旬 (9-19日)</strong> — 春雨频繁，气温升高可达28°C，备好Plan B</li>
+      <li><strong>4月末 (20-30日)</strong> — 温暖多云，晚樱还在</li>
+      <li><strong>5月</strong> — 天气好，樱花已落，油菜花还有</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>2026花期预测（比往年早一周）</h3>
+    <p>开花日：3月25日<br>
+    <strong>盛花期：3/31 - 4/10</strong>（黄金窗口，清明可冲！）</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🗺️ 推荐行程 (4天3晚)</div>
+
+  <div class="card">
+    <div class="day-row">
+      <div class="day-badge">1</div>
+      <div class="day-content">
+        <strong>东线（多篇一致推荐最美）</strong>
+        <span>牛岛(7:30首班船，玩3h) → 城山日出峰 → 广峙其海滩 → 涉地可支(日落前到)</span>
+      </div>
+    </div>
+    <div class="day-row">
+      <div class="day-badge">2</div>
+      <div class="day-content">
+        <strong>南线</strong>
+        <span>柱状节理带 → 法还洞 → 咖啡厅 → 偶来市场逛吃（开门晚，放下午/晚上）</span>
+      </div>
+    </div>
+    <div class="day-row">
+      <div class="day-badge">3</div>
+      <div class="day-content">
+        <strong>市区 + 赏花</strong>
+        <span>咸德海水浴场 → 月汀里 → 典农路樱花隧道(有夜樱) → 市区购物</span>
+      </div>
+    </div>
+    <div class="day-row" style="margin-bottom:0">
+      <div class="day-badge">4</div>
+      <div class="day-content">
+        <strong>赏花 / 自由行</strong>
+        <span>鹿山路(樱花+油菜花同框) → 济州大学 → 新山公园野餐 / 或偶来小路徒步</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🌸 赏樱地 TOP 5</div>
+
+  <div class="card">
+    <div class="cherry-spot">
+      <div class="cherry-num">1</div>
+      <div class="cherry-detail">
+        <strong>鹿山路</strong>
+        <p>樱花+油菜花同框，"韩国最美100条公路之一"，需包车前往</p>
+      </div>
+    </div>
+    <div class="cherry-spot">
+      <div class="cherry-num">2</div>
+      <div class="cherry-detail">
+        <strong>典农路</strong>
+        <p>1.2km樱花隧道，樱花节主会场，夜樱绝美！建议傍晚去</p>
+      </div>
+    </div>
+    <div class="cherry-spot">
+      <div class="cherry-num">3</div>
+      <div class="cherry-detail">
+        <strong>济州大学</strong>
+        <p>校门口樱花走廊，人少，日系校园风拍照很出片</p>
+      </div>
+    </div>
+    <div class="cherry-spot">
+      <div class="cherry-num">4</div>
+      <div class="cherry-detail">
+        <strong>三姓穴</strong>
+        <p>古建筑+古樱同框，早上去避旅行团</p>
+      </div>
+    </div>
+    <div class="cherry-spot" style="margin-bottom:0">
+      <div class="cherry-num">5</div>
+      <div class="cherry-detail">
+        <strong>新山公园</strong>
+        <p>本地人爱去，超大樱花树下野餐一下午</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">⚠️ 避雷指南</div>
+  <div class="warn">西线涯月邑打卡感重，多人建议跳过</div>
+  <div class="warn">偶来市场开门晚，别一早去扑空</div>
+  <div class="warn">机场非24小时，不能过夜！值机5:00开始</div>
+  <div class="warn">廉航回国查行李严，超重提前买行李额</div>
+  <div class="warn">晚上机场打车去西归浦 500+rmb，司机不打表</div>
+  <div class="warn">4月海边温差大，上午吊带下午可能冻到穿外套</div>
+  <div class="warn">鹿山路公交不方便，必须包车</div>
+  <div class="warn">樱花花期很短！出发前一周刷韩国气象厅看花况</div>
+</div>
+
+<div class="section">
+  <div class="section-title">🏨 住宿选择</div>
+  <div class="card">
+    <h3>市区 · 宝健路附近</h3>
+    <p>
+      <span class="tag blue">交通便利</span>
+      <span class="tag blue">离机场近10min</span>
+      <span class="tag blue">吃喝购物多</span>
+    </p>
+    <p style="margin-top:8px; font-size:13px; color:var(--muted);">评论区建议：不用住机场旁，住宝健路就行</p>
+  </div>
+  <div class="card">
+    <h3>西归浦</h3>
+    <p>
+      <span class="tag">安静度假感</span>
+      <span class="tag">人少景美</span>
+      <span class="tag">适合情侣/亲子</span>
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🚗 交通</div>
+  <div class="card">
+    <ul>
+      <li><strong>1-3人</strong> — 公交+打车最灵活</li>
+      <li><strong>3人以上</strong> — 包车更划算（东线+西线一天跑完）</li>
+      <li><strong>公交</strong> — 支付宝刷 1200韩元/次，公交卡 1150韩元/次</li>
+      <li><strong>打车</strong> — 起步4900韩元，市区到西归浦约300rmb</li>
+      <li><strong>导航</strong> — 用 KakaoMap（谷歌地图不好用）</li>
+      <li><strong>餐厅评分</strong> — KakaoMap 查，本地人打分</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">💰 费用参考</div>
+  <div class="card">
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">博主实测 4天 不到 3000 RMB / 人</p>
+    <table class="cost-table">
+      <tr><th>项目</th><th>费用</th></tr>
+      <tr><td>往返机票</td><td>~1,000+</td></tr>
+      <tr><td>3晚住宿(人均)</td><td>~600</td></tr>
+      <tr><td>吃饭</td><td>~600</td></tr>
+      <tr><td>交通+门票</td><td>~500</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:12px; color:var(--muted);">注：物价偏高，1.5L矿泉水约10rmb，柑橘2000韩元/个</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">📌 必带清单</div>
+  <div class="card">
+    <ul class="checklist">
+      <li>护照（免签，白本丝滑入境）</li>
+      <li>高倍防晒 + 墨镜 + 帽子</li>
+      <li>防风外套（海风大，洋葱穿法）</li>
+      <li>折叠伞（4月中旬后常下雨）</li>
+      <li>转换插头</li>
+      <li>现金韩元（传统市场用，大部分店支持支付宝）</li>
+      <li>Visa/Master芯片信用卡</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">💬 评论区精华</div>
+  <div class="card">
+    <ul>
+      <li><strong>东线一天能玩完吗？</strong> — 7:30坐船去牛岛，3h下岛，走路去日出峰，午饭后去海滩，日落前到涉地可支</li>
+      <li><strong>住市区去西归浦方便吗？</strong> — 公交直达，很方便</li>
+      <li><strong>4月7-8号还有樱花吗？</strong> — 有晚樱，但别下雨就好，雨会加速落花</li>
+      <li><strong>清明假期人多吗？</strong> — 比国内景点人少</li>
+      <li><strong>带娃穿什么？</strong> — 三合一外套+卫衣，早晚冷</li>
+      <li><strong>汉拿山值得去吗？</strong> — 需一整天，早上6:00出发，春夏更适合，难度中等</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <p>数据来源：小红书 6 篇高赞笔记 + 500+ 条评论</p>
+  <p>生成时间：2026-03-29 | by 小胖</p>
+</div>
+
+<script>
+document.querySelectorAll('.accordion').forEach(el => {
+  el.addEventListener('click', () => {
+    el.classList.toggle('open');
+    el.nextElementSibling.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
