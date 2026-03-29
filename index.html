@@ -340,44 +340,48 @@
 
 <script>
 var map = L.map('map').setView([33.40, 126.65], 10);
-L.tileLayer('https://wprd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}', {
-  attribution: '&copy; 高德地图',
-  maxZoom: 18,
-  subdomains: '1234'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap',
+  maxZoom: 18
 }).addTo(map);
 
-var eastIcon = L.divIcon({className:'', html:'<div style="background:#ff6b9d;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">E</div>'});
-var southIcon = L.divIcon({className:'', html:'<div style="background:#4ecdc4;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">S</div>'});
-var flowerIcon = L.divIcon({className:'', html:'<div style="background:#ff9f43;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">F</div>'});
-var cityIcon = L.divIcon({className:'', html:'<div style="background:#6c5ce7;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">C</div>'});
+function makeIcon(emoji, name, color) {
+  return L.divIcon({
+    className: '',
+    html: '<div style="display:flex;align-items:center;gap:4px;white-space:nowrap;">' +
+      '<div style="background:'+color+';color:#fff;border-radius:50%;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.3);flex-shrink:0;">'+emoji+'</div>' +
+      '<span style="background:'+color+';color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.2);">'+name+'</span></div>',
+    iconAnchor: [14, 14]
+  });
+}
 
+var E = '#ff6b9d', S = '#4ecdc4', F = '#ff9f43', C = '#6c5ce7';
 var spots = [
-  // 东线 E
-  {lat:33.504,lng:126.955,icon:eastIcon,name:'牛岛 Udo',desc:'最美离岛，翡翠海蚀洞，7:30首班船'},
-  {lat:33.458,lng:126.940,icon:eastIcon,name:'城山日出峰',desc:'182m火山口，30min登顶，早上人少'},
-  {lat:33.453,lng:126.935,icon:eastIcon,name:'广峙其海滩',desc:'日出峰脚下的安静海滩'},
-  {lat:33.424,lng:126.931,icon:eastIcon,name:'涉地可支',desc:'韩剧取景地，白色灯塔，日落最美'},
-  {lat:33.543,lng:126.669,icon:eastIcon,name:'咸德海水浴场',desc:'果冻色海水，济州最美沙滩'},
-  {lat:33.555,lng:126.854,icon:eastIcon,name:'月汀里',desc:'果冻海+海边咖啡厅'},
-  // 南线 S
-  {lat:33.237,lng:126.425,icon:southIcon,name:'柱状节理带',desc:'火山岩柱群，门票2000韩元，风大'},
-  {lat:33.249,lng:126.563,icon:southIcon,name:'西归浦/偶来市场',desc:'南部小城，市场晚上逛吃'},
-  // 赏花 F
-  {lat:33.510,lng:126.530,icon:flowerIcon,name:'典农路',desc:'1.2km樱花隧道，有夜樱灯光'},
-  {lat:33.320,lng:126.350,icon:flowerIcon,name:'鹿山路',desc:'樱花+油菜花同框，8.5km公路'},
-  {lat:33.457,lng:126.562,icon:flowerIcon,name:'济州大学',desc:'樱花走廊，人少日系风'},
-  {lat:33.507,lng:126.529,icon:flowerIcon,name:'三姓穴',desc:'古建筑+古樱，门票4000韩元'},
-  {lat:33.495,lng:126.535,icon:flowerIcon,name:'新山公园',desc:'本地人野餐地，大樱花树'},
-  // 市区 C
-  {lat:33.510,lng:126.492,icon:cityIcon,name:'济州机场',desc:'非24小时！值机5:00开始'},
-  {lat:33.489,lng:126.531,icon:cityIcon,name:'宝健路(推荐住宿区)',desc:'交通方便，吃喝购物多'},
-  {lat:33.362,lng:126.533,icon:cityIcon,name:'汉拿山',desc:'需一整天，早6:00出发，难度中等'}
+  {lat:33.504,lng:126.955,icon:makeIcon('🏝','牛岛',E),name:'牛岛 Udo',desc:'最美离岛，翡翠海蚀洞<br>7:30首班船，船票1万韩元/人<br>逆时针方向逛，玩3h'},
+  {lat:33.458,lng:126.940,icon:makeIcon('🌋','日出峰',E),name:'城山日出峰',desc:'182m火山口，30min登顶<br>早上10点前人少<br>下山步行20min到牛岛码头'},
+  {lat:33.424,lng:126.931,icon:makeIcon('🌊','涉地可支',E),name:'涉地可支 Seopjikoji',desc:'韩剧取景地，白色灯塔<br>离日出峰较远需打车<br>建议日落前到'},
+  {lat:33.543,lng:126.669,icon:makeIcon('🏖','咸德',E),name:'咸德海水浴场',desc:'果冻色海水，济州最美沙滩<br>爬旁边小山可俯瞰全景'},
+  {lat:33.555,lng:126.854,icon:makeIcon('☕','月汀里',E),name:'月汀里 Woljeong',desc:'果冻海+海边咖啡厅一条街'},
+  {lat:33.237,lng:126.425,icon:makeIcon('🪨','柱状节理',S),name:'柱状节理带',desc:'火山熔岩遇海水形成六角石柱<br>门票2000韩元，风很大！<br>600/601路到ICC下车'},
+  {lat:33.249,lng:126.563,icon:makeIcon('🏘','西归浦',S),name:'西归浦/偶来市场',desc:'南部小城，安静惬意<br>偶来市场晚上逛吃<br>评论区：东门市场更推荐'},
+  {lat:33.510,lng:126.530,icon:makeIcon('🌸','典农路',F),name:'典农路 樱花隧道',desc:'1.2km樱花隧道，夜樱绝美<br>樱花节3.27-3.29<br>市区过去方便'},
+  {lat:33.320,lng:126.350,icon:makeIcon('🌼','鹿山路',F),name:'鹿山路 双花公路',desc:'樱花+油菜花同框8.5km<br>人比典农路少90%<br>需包车，公交不方便'},
+  {lat:33.457,lng:126.562,icon:makeIcon('🎓','济州大学',F),name:'济州大学 樱花走廊',desc:'校门口樱花走廊<br>人少，日系校园风'},
+  {lat:33.510,lng:126.492,icon:makeIcon('✈️','机场',C),name:'济州机场',desc:'非24小时！不能过夜<br>值机5:00，安检5:50<br>到市区打车10分钟'},
+  {lat:33.489,lng:126.531,icon:makeIcon('🏨','宝健路',C),name:'宝健路 (推荐住宿)',desc:'交通方便，吃喝购物多<br>离机场10min<br>评论区推荐住这里'},
+  {lat:33.362,lng:126.533,icon:makeIcon('⛰️','汉拿山',C),name:'汉拿山',desc:'需一整天，早6:00出发<br>春夏更适合，难度中等'}
 ];
 
 spots.forEach(function(s) {
   L.marker([s.lat, s.lng], {icon: s.icon}).addTo(map)
     .bindPopup('<b>'+s.name+'</b><br><span style="font-size:12px;color:#636e72;">'+s.desc+'</span>');
 });
+
+// 路线连线
+var eastLine = [[33.543,126.669],[33.555,126.854],[33.458,126.940],[33.504,126.955],[33.424,126.931]];
+var southLine = [[33.489,126.531],[33.237,126.425],[33.249,126.563]];
+L.polyline(eastLine, {color:'#ff6b9d', weight:2, dashArray:'8,6', opacity:0.7}).addTo(map).bindPopup('Day1 东线路线');
+L.polyline(southLine, {color:'#4ecdc4', weight:2, dashArray:'8,6', opacity:0.7}).addTo(map).bindPopup('Day2 南线路线');
 
 // 图例
 var legend = L.control({position:'bottomright'});
