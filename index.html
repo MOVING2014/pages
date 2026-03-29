@@ -4,334 +4,299 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>济州岛4-5月旅行攻略</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-  :root {
-    --pink: #ff6b9d;
-    --blue: #4ecdc4;
-    --orange: #ff9f43;
-    --bg: #fafafa;
-    --card: #ffffff;
-    --text: #2d3436;
-    --muted: #636e72;
-  }
+  :root { --pink: #ff6b9d; --blue: #4ecdc4; --orange: #ff9f43; --bg: #fafafa; --card: #fff; --text: #2d3436; --muted: #636e72; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 16px 80px;
-  }
-  .hero {
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%);
-    margin: 0 -16px;
-    padding: 48px 24px 32px;
-    text-align: center;
-    color: #fff;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; max-width: 640px; margin: 0 auto; padding: 0 16px 80px; }
+  .hero { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%); margin: 0 -16px; padding: 48px 24px 32px; text-align: center; color: #fff; }
   .hero h1 { font-size: 28px; text-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-  .hero p { margin-top: 8px; font-size: 14px; opacity: 0.9; }
-  .section { margin-top: 24px; }
-  .section-title {
-    font-size: 18px;
-    font-weight: 700;
-    padding: 12px 0;
-    border-bottom: 3px solid var(--pink);
-    display: inline-block;
-    margin-bottom: 12px;
-  }
-  .card {
-    background: var(--card);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .card h3 {
-    font-size: 15px;
-    color: var(--pink);
-    margin-bottom: 8px;
-  }
-  .card p, .card li { font-size: 14px; color: var(--text); }
+  .hero p { margin-top: 6px; font-size: 13px; opacity: 0.9; }
+  .section { margin-top: 28px; }
+  .section-title { font-size: 18px; font-weight: 700; padding: 10px 0; border-bottom: 3px solid var(--pink); display: inline-block; margin-bottom: 14px; }
+  .card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card h3 { font-size: 15px; color: var(--pink); margin-bottom: 8px; }
+  .card p, .card li { font-size: 14px; }
   .card ul { padding-left: 20px; }
   .card li { margin-bottom: 4px; }
-  .tag {
-    display: inline-block;
-    background: #fff0f3;
-    color: var(--pink);
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    margin: 2px 4px 2px 0;
-  }
+  .tag { display: inline-block; background: #fff0f3; color: var(--pink); padding: 2px 10px; border-radius: 12px; font-size: 12px; margin: 2px 4px 2px 0; }
   .tag.blue { background: #e8fffe; color: var(--blue); }
   .tag.orange { background: #fff5eb; color: var(--orange); }
-  .day-badge {
-    display: inline-block;
-    background: var(--pink);
-    color: #fff;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 28px;
-    font-size: 13px;
-    font-weight: 700;
-    margin-right: 8px;
-    flex-shrink: 0;
-  }
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .photo-grid img { width: 100%; border-radius: 8px; object-fit: cover; aspect-ratio: 4/3; }
+  .photo-full { width: 100%; border-radius: 12px; margin: 12px 0; object-fit: cover; max-height: 300px; }
+  .photo-caption { font-size: 11px; color: var(--muted); text-align: center; margin: -4px 0 8px; }
+  .warn { background: #fff8e1; border-left: 4px solid #ffb300; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 8px; font-size: 13px; }
+  .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 8px; font-size: 13px; }
+  .comment { background: #f8f9fa; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; }
+  .comment .author { color: var(--pink); font-weight: 600; font-size: 12px; }
+  .comment .text { margin-top: 4px; }
+  .day-badge { display: inline-block; background: var(--pink); color: #fff; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-size: 13px; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
   .day-row { display: flex; align-items: flex-start; margin-bottom: 12px; }
   .day-content { flex: 1; }
   .day-content strong { font-size: 14px; }
   .day-content span { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
-  .warn {
-    background: #fff8e1;
-    border-left: 4px solid #ffb300;
-    padding: 12px 14px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 10px;
-    font-size: 13px;
-  }
-  .cherry-spot { display: flex; align-items: flex-start; margin-bottom: 10px; }
-  .cherry-num {
-    background: linear-gradient(135deg, #ff9a9e, #fecfef);
-    color: #fff;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 24px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-right: 10px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .cherry-detail { flex: 1; }
-  .cherry-detail strong { font-size: 14px; }
-  .cherry-detail p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  #map { height: 320px; border-radius: 12px; margin: 12px 0; z-index: 1; }
   .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .cost-table th { text-align: left; padding: 8px; background: #fff0f3; color: var(--pink); border-radius: 6px; }
+  .cost-table th { text-align: left; padding: 8px; background: #fff0f3; color: var(--pink); }
   .cost-table td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
   .checklist { list-style: none; padding: 0; }
-  .checklist li { padding: 6px 0; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
-  .checklist li::before { content: "✅ "; }
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin: 12px 0;
-  }
-  .photo-grid img {
-    width: 100%;
-    border-radius: 8px;
-    object-fit: cover;
-    aspect-ratio: 4/3;
-  }
-  .photo-full {
-    width: 100%;
-    border-radius: 12px;
-    margin: 12px 0;
-    object-fit: cover;
-  }
-  .photo-caption {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 4px;
-  }
-  .footer {
-    text-align: center;
-    margin-top: 32px;
-    padding: 16px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .accordion { cursor: pointer; user-select: none; }
-  .accordion-content { display: none; padding-top: 8px; }
-  .accordion-content.open { display: block; }
-  .accordion::after { content: " ▼"; font-size: 10px; }
-  .accordion.open::after { content: " ▲"; }
+  .checklist li { padding: 5px 0; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+  .checklist li::before { content: "\2705 "; }
+  .footer { text-align: center; margin-top: 32px; padding: 16px; font-size: 12px; color: var(--muted); }
+  .spot-card { display: flex; gap: 12px; margin-bottom: 14px; background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .spot-card img { width: 140px; min-height: 120px; object-fit: cover; flex-shrink: 0; }
+  .spot-card .info { padding: 12px; flex: 1; }
+  .spot-card .info h4 { font-size: 14px; margin-bottom: 4px; color: var(--pink); }
+  .spot-card .info p { font-size: 13px; color: var(--muted); }
+  @media (max-width: 400px) { .spot-card { flex-direction: column; } .spot-card img { width: 100%; height: 180px; } }
 </style>
 </head>
 <body>
 
 <div class="hero">
   <h1>济州岛 4-5月攻略</h1>
-  <p>综合小红书6篇高赞笔记 + 500+条评论整理</p>
-  <p style="margin-top:4px; font-size:12px;">2026.03.29 by 小胖</p>
+  <p>综合小红书 6 篇高赞笔记 + 500+ 条评论</p>
+  <p>2026.03.29 by 小胖</p>
 </div>
 
-<img src="images/hero.webp" class="photo-full" alt="济州岛攻略封面">
-<p class="photo-caption">图片来源：小红书 @Amber的背包日记</p>
+<!-- ===== 地图 ===== -->
+<div class="section">
+  <div class="section-title">🗺️ 景点地图</div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">点击标记查看景点简介，颜色区分路线</p>
+  <div id="map"></div>
+</div>
 
+<!-- ===== 最佳时间 ===== -->
 <div class="section">
   <div class="section-title">📅 最佳时间</div>
   <div class="card">
-    <h3>4月天气速查</h3>
+    <h3>4月天气 · 济州本地人整理</h3>
     <ul>
-      <li><strong>4月初 (1-8日)</strong> — 最完美！持续晴朗 13-24°C，樱花+油菜花同时盛开</li>
-      <li><strong>4月中旬 (9-19日)</strong> — 春雨频繁，气温升高可达28°C，备好Plan B</li>
+      <li><strong>4月初 (1-8日)</strong> — 最完美！晴朗 13-24°C，樱花+油菜花同开</li>
+      <li><strong>4月中旬 (9-19日)</strong> — 春雨频繁，可达28°C，备室内Plan B</li>
       <li><strong>4月末 (20-30日)</strong> — 温暖多云，晚樱还在</li>
-      <li><strong>5月</strong> — 天气好，樱花已落，油菜花还有</li>
+      <li><strong>5月</strong> — 天气好但樱花已落，油菜花还有</li>
     </ul>
   </div>
   <div class="card">
-    <h3>2026花期预测（比往年早一周）</h3>
-    <p>开花日：3月25日<br>
-    <strong>盛花期：3/31 - 4/10</strong>（黄金窗口，清明可冲！）</p>
+    <h3>2026花期（比往年早一周）</h3>
+    <p>开花日：3月25日 | <strong>盛花期：3/31-4/10</strong>（清明可冲！）</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:4px;">樱花节: 典农路 3.27-3.29 | 猊来公园 4.4-4.5 | 油菜花节: 鹿山路 4.4-4.5</p>
   </div>
+  <div class="tip">穿搭：洋葱穿法！薄长袖+防风外套，海边上午穿吊带下午可能冻到穿外套。4月中旬后带折叠伞。</div>
 </div>
 
+<!-- ===== 推荐行程 ===== -->
 <div class="section">
-  <div class="section-title">🗺️ 推荐行程 (4天3晚)</div>
-
-  <div class="photo-grid">
-    <img src="images/east1.webp" alt="东线风景">
-    <img src="images/east2.webp" alt="东线海滩">
-    <img src="images/south2.webp" alt="南线风景">
-    <img src="images/city1.webp" alt="市区风景">
-  </div>
-  <p class="photo-caption">东线海岸 · 南线柱状节理 · 咸德海水浴场</p>
-
+  <div class="section-title">📋 推荐行程 (4天3晚)</div>
   <div class="card">
     <div class="day-row">
       <div class="day-badge">1</div>
       <div class="day-content">
-        <strong>东线（多篇一致推荐最美）</strong>
-        <span>牛岛(7:30首班船，玩3h) → 城山日出峰 → 广峙其海滩 → 涉地可支(日落前到)</span>
+        <strong>东线 · 最美一天</strong>
+        <span>城山日出峰(早上人少) → 步行20min到牛岛码头 → 牛岛玩3h → 广峙其海滩 → 涉地可支(日落前)</span>
       </div>
     </div>
     <div class="day-row">
       <div class="day-badge">2</div>
       <div class="day-content">
         <strong>南线</strong>
-        <span>柱状节理带 → 法还洞 → 咖啡厅 → 偶来市场逛吃（开门晚，放下午/晚上）</span>
+        <span>柱状节理带(2000韩元) → 中文海滩(隐藏景点) → 咖啡厅 → 偶来市场逛吃(开门晚放下午)</span>
       </div>
     </div>
     <div class="day-row">
       <div class="day-badge">3</div>
       <div class="day-content">
-        <strong>市区 + 赏花</strong>
-        <span>咸德海水浴场 → 月汀里 → 典农路樱花隧道(有夜樱) → 市区购物</span>
+        <strong>赏花 + 市区</strong>
+        <span>鹿山路(樱花油菜花同框) → 典农路樱花隧道(有夜樱) → 市区购物/东门市场</span>
       </div>
     </div>
     <div class="day-row" style="margin-bottom:0">
       <div class="day-badge">4</div>
       <div class="day-content">
-        <strong>赏花 / 自由行</strong>
-        <span>鹿山路(樱花+油菜花同框) → 济州大学 → 新山公园野餐 / 或偶来小路徒步</span>
+        <strong>北线 + 自由</strong>
+        <span>咸德海水浴场 → 月汀里果冻海 → 市区逛吃/免税店 / 或偶来小路徒步</span>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ===== 东线景点 ===== -->
 <div class="section">
+  <div class="section-title">🏝️ 东线景点</div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">多篇笔记一致推荐最美路线</p>
+
+  <div class="spot-card">
+    <img src="images/udo_1.webp" alt="牛岛海蚀洞">
+    <div class="info">
+      <h4>牛岛 Udo</h4>
+      <p>济州最美离岛，翡翠色海蚀洞、白沙滩。7:30首班船，玩3h足够。逆时针方向逛离快艇近。船票约1万韩元/人。</p>
+    </div>
+  </div>
+
+  <div class="spot-card">
+    <img src="images/seongsan_1.webp" alt="城山日出峰">
+    <div class="info">
+      <h4>城山日出峰 Seongsan</h4>
+      <p>182m火山口，30min登顶。早上10点前人少，下山后步行20min可到牛岛码头（偶来小路1号线）。</p>
+    </div>
+  </div>
+
+  <div class="spot-card">
+    <img src="images/hamdeok_1.webp" alt="咸德海水浴场">
+    <div class="info">
+      <h4>咸德海水浴场 Hamdeok</h4>
+      <p>果冻色清澈海水，沙子细腻。爬旁边的小山可以俯瞰全景。多位博主评价"济州最美沙滩"。</p>
+    </div>
+  </div>
+
+  <div class="spot-card">
+    <img src="images/seopjikoji_1.webp" alt="涉地可支">
+    <div class="info">
+      <h4>涉地可支 Seopjikoji</h4>
+      <p>韩剧般的绝美海岸，白色灯塔标志性打卡点。火山+海洋+花田同框，建议日落前到。离日出峰较远需打车。</p>
+    </div>
+  </div>
+
   <div class="photo-grid">
-    <img src="images/hike1.webp" alt="偶来小路徒步">
-    <img src="images/hike2.webp" alt="徒步风景">
+    <img src="images/07_udo_turquoise_water.webp" alt="牛岛碧海">
+    <img src="images/01_hamdeok_mountain_view.webp" alt="咸德俯瞰">
   </div>
-  <p class="photo-caption">偶来小路徒步 · 集盖章、看海、人文于一体</p>
+  <p class="photo-caption">牛岛碧海 · 咸德海水浴场山顶俯瞰</p>
 
-  <div class="section-title">🌸 赏樱地 TOP 5</div>
-
-  <div class="card">
-    <div class="cherry-spot">
-      <div class="cherry-num">1</div>
-      <div class="cherry-detail">
-        <strong>鹿山路</strong>
-        <p>樱花+油菜花同框，"韩国最美100条公路之一"，需包车前往</p>
-      </div>
-    </div>
-    <div class="cherry-spot">
-      <div class="cherry-num">2</div>
-      <div class="cherry-detail">
-        <strong>典农路</strong>
-        <p>1.2km樱花隧道，樱花节主会场，夜樱绝美！建议傍晚去</p>
-      </div>
-    </div>
-    <div class="cherry-spot">
-      <div class="cherry-num">3</div>
-      <div class="cherry-detail">
-        <strong>济州大学</strong>
-        <p>校门口樱花走廊，人少，日系校园风拍照很出片</p>
-      </div>
-    </div>
-    <div class="cherry-spot">
-      <div class="cherry-num">4</div>
-      <div class="cherry-detail">
-        <strong>三姓穴</strong>
-        <p>古建筑+古樱同框，早上去避旅行团</p>
-      </div>
-    </div>
-    <div class="cherry-spot" style="margin-bottom:0">
-      <div class="cherry-num">5</div>
-      <div class="cherry-detail">
-        <strong>新山公园</strong>
-        <p>本地人爱去，超大樱花树下野餐一下午</p>
-      </div>
-    </div>
+  <div class="comment">
+    <div class="author">@Amber的背包日记 (作者回复)</div>
+    <div class="text">东线的话，先去牛岛，下船后有条小路可以直接走到日出峰（偶来小路1号线），然后步行去广峙其海滩，涉地可支比较远需要打车，时间来不及就去3个</div>
+  </div>
+  <div class="comment">
+    <div class="author">@评论区实测</div>
+    <div class="text">一个人往上面走，路上一个人都没有很荒凉...但风景出来后超值！酒店老板也推荐这条路</div>
   </div>
 </div>
 
+<!-- ===== 赏花 ===== -->
 <div class="section">
-  <div class="photo-grid">
-    <img src="images/south1.webp" alt="南线景色">
-    <img src="images/south3.webp" alt="西归浦">
-    <img src="images/city2.webp" alt="市区">
-  </div>
-  <p class="photo-caption">南线 · 西归浦 · 市区周边</p>
+  <div class="section-title">🌸 赏花指南</div>
 
-  <div class="section-title">⚠️ 避雷指南</div>
-  <div class="warn">西线涯月邑打卡感重，多人建议跳过</div>
-  <div class="warn">偶来市场开门晚，别一早去扑空</div>
-  <div class="warn">机场非24小时，不能过夜！值机5:00开始</div>
-  <div class="warn">廉航回国查行李严，超重提前买行李额</div>
-  <div class="warn">晚上机场打车去西归浦 500+rmb，司机不打表</div>
-  <div class="warn">4月海边温差大，上午吊带下午可能冻到穿外套</div>
-  <div class="warn">鹿山路公交不方便，必须包车</div>
-  <div class="warn">樱花花期很短！出发前一周刷韩国气象厅看花况</div>
+  <img src="images/cherry_tunnel.webp" class="photo-full" alt="典农路樱花隧道">
+  <p class="photo-caption">典农路 · 1.2km樱花隧道 · 有夜樱灯光（3.27-3.29樱花节）</p>
+
+  <div class="spot-card">
+    <img src="images/canola.webp" alt="油菜花与汉拿山">
+    <div class="info">
+      <h4>鹿山路 Noksan-ro</h4>
+      <p>樱花+油菜花同框！8.5km公路，一侧粉色一侧金黄。人比典农路少90%。需包车前往，公交不方便。</p>
+      <p style="margin-top:4px;"><span class="tag">最佳: 3.25-4.10</span> <span class="tag">早9前/晚4:30后光线好</span></p>
+    </div>
+  </div>
+
+  <img src="images/sakura_road.webp" class="photo-full" alt="樱花溪流">
+  <p class="photo-caption">西归浦花上礼洞 · 溪边樱花盛开</p>
+
+  <div class="card">
+    <h3>赏花地 TOP 5</h3>
+    <ul>
+      <li><strong>鹿山路</strong> — 双花同框天花板，远离人群</li>
+      <li><strong>典农路</strong> — 樱花节主会场，夜樱绝美</li>
+      <li><strong>济州大学</strong> — 人少日系校园风</li>
+      <li><strong>三姓穴</strong> — 古建筑+古樱，早上去避旅行团（门票4000韩元）</li>
+      <li><strong>新山公园</strong> — 本地人野餐地，超大樱花树</li>
+    </ul>
+  </div>
+
+  <div class="comment">
+    <div class="author">@逛吃菌 (277赞)</div>
+    <div class="text">鹿山路remote=隐藏宝藏，人少拍照更好，更有当地感。站在路弯处拍纵深感最美，可以走进油菜花田+头顶樱花枝</div>
+  </div>
+  <div class="comment">
+    <div class="author">@评论区问答</div>
+    <div class="text">Q: 4月7-8号还有樱花吗？A: 有晚樱，但别下雨，雨会加速落花。出发前一周刷韩国气象厅看实时花况</div>
+  </div>
 </div>
 
+<!-- ===== 南线景点 ===== -->
 <div class="section">
-  <div class="section-title">🏨 住宿选择</div>
-  <div class="card">
-    <h3>市区 · 宝健路附近</h3>
-    <p>
-      <span class="tag blue">交通便利</span>
-      <span class="tag blue">离机场近10min</span>
-      <span class="tag blue">吃喝购物多</span>
-    </p>
-    <p style="margin-top:8px; font-size:13px; color:var(--muted);">评论区建议：不用住机场旁，住宝健路就行</p>
+  <div class="section-title">🌊 南线景点</div>
+
+  <div class="spot-card">
+    <img src="images/jusangjeolli.webp" alt="柱状节理带">
+    <div class="info">
+      <h4>柱状节理带 Jusangjeolli</h4>
+      <p>火山熔岩遇海水冷却形成的六角形石柱群，很壮观。门票2000韩元，1小时够逛。风很大带帽子！</p>
+      <p style="margin-top:4px;"><span class="tag blue">600/601路到ICC下车</span></p>
+    </div>
   </div>
-  <div class="card">
-    <h3>西归浦</h3>
-    <p>
-      <span class="tag">安静度假感</span>
-      <span class="tag">人少景美</span>
-      <span class="tag">适合情侣/亲子</span>
-    </p>
+
+  <div class="spot-card">
+    <img src="images/seogwipo.webp" alt="西归浦海岸">
+    <div class="info">
+      <h4>西归浦 Seogwipo</h4>
+      <p>安静惬意的南部小城，人少景美。偶来市场晚上逛吃，但评价一般，东门市场更推荐。</p>
+    </div>
+  </div>
+
+  <div class="tip">隐藏景点：中文海滩（离柱状节理2km），中国游客极少，风景很好！</div>
+
+  <div class="warn">偶来市场踩雷预警：评论区多人说"一般且贵，不如东门市场"。作者补充：开门时间晚，别早上去扑空。21:00前打车回市区，坐公交的话22:00还有末班车。</div>
+
+  <div class="comment">
+    <div class="author">@Belle (416赞)</div>
+    <div class="text">推荐 Don 65 黑猪肉餐厅，550g套餐，厚切BBQ，"整个济州岛最惊艳的一餐"</div>
+  </div>
+  <div class="comment">
+    <div class="author">@Amber的背包日记 (作者回复)</div>
+    <div class="text">住市区去西归浦方便，公交直达。如果去偶来小路徒步到起点往返2.5h左右，三四晚行程不需要换住宿</div>
   </div>
 </div>
 
+<!-- ===== 避雷 ===== -->
+<div class="section">
+  <div class="section-title">⚠️ 避雷 · 评论区踩坑汇总</div>
+  <div class="warn">涯月邑：打卡感重，多人建议跳过</div>
+  <div class="warn">机场：非24小时！不能过夜！值机5:00开始，安检5:50</div>
+  <div class="warn">廉航回国查行李严，超重提前买行李额。OLIVE YOUNG在1层4号门旁，安检前去</div>
+  <div class="warn">晚上机场打车去西归浦 500+RMB，司机不打表（跑空车回来）。白天约300RMB</div>
+  <div class="warn">物价偏高：1.5L矿泉水约10RMB，一个柑橘2000韩元</div>
+  <div class="warn">鹿山路没有直达公交，必须包车/打车</div>
+  <div class="warn">樱花花期很短！出发前一周刷韩国气象厅或 Naver 看实时花况</div>
+</div>
+
+<!-- ===== 交通住宿 ===== -->
 <div class="section">
   <div class="section-title">🚗 交通</div>
   <div class="card">
     <ul>
       <li><strong>1-3人</strong> — 公交+打车最灵活</li>
-      <li><strong>3人以上</strong> — 包车更划算（东线+西线一天跑完）</li>
-      <li><strong>公交</strong> — 支付宝刷 1200韩元/次，公交卡 1150韩元/次</li>
-      <li><strong>打车</strong> — 起步4900韩元，市区到西归浦约300rmb</li>
-      <li><strong>导航</strong> — 用 KakaoMap（谷歌地图不好用）</li>
-      <li><strong>餐厅评分</strong> — KakaoMap 查，本地人打分</li>
+      <li><strong>3人+</strong> — 包车更划算</li>
+      <li><strong>公交</strong> — 支付宝刷1200韩元/次，公交卡1150韩元/次</li>
+      <li><strong>打车</strong> — 起步4900韩元，市区到西归浦约300RMB</li>
+      <li><strong>导航</strong> — 用 KakaoMap（谷歌地图不好用），餐厅评分也用它查</li>
+      <li><strong>600路</strong> — 机场大巴往返济州市-西归浦，约30min一班</li>
     </ul>
   </div>
 </div>
 
 <div class="section">
-  <div class="section-title">💰 费用参考</div>
+  <div class="section-title">🏨 住宿</div>
   <div class="card">
-    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">博主实测 4天 不到 3000 RMB / 人</p>
+    <h3>市区 · 宝健路附近</h3>
+    <p><span class="tag blue">交通便利</span> <span class="tag blue">离机场10min</span> <span class="tag blue">吃喝购物多</span></p>
+    <p style="font-size:13px; color:var(--muted); margin-top:6px;">评论区：住宝健路，不要住七星路（不是真正市中心）。不用住机场旁。</p>
+  </div>
+  <div class="card">
+    <h3>西归浦</h3>
+    <p><span class="tag">安静度假感</span> <span class="tag">人少景美</span> <span class="tag">适合情侣/亲子</span></p>
+    <p style="font-size:13px; color:var(--muted); margin-top:6px;">评论区推荐：Seom Guesthouse 6F海景房，人均才100RMB</p>
+  </div>
+</div>
+
+<!-- ===== 费用 ===== -->
+<div class="section">
+  <div class="section-title">💰 费用</div>
+  <div class="card">
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">博主实测 4天 不到 3000 RMB/人</p>
     <table class="cost-table">
       <tr><th>项目</th><th>费用</th></tr>
       <tr><td>往返机票</td><td>~1,000+</td></tr>
@@ -339,10 +304,10 @@
       <tr><td>吃饭</td><td>~600</td></tr>
       <tr><td>交通+门票</td><td>~500</td></tr>
     </table>
-    <p style="margin-top:8px; font-size:12px; color:var(--muted);">注：物价偏高，1.5L矿泉水约10rmb，柑橘2000韩元/个</p>
   </div>
 </div>
 
+<!-- ===== 必带清单 ===== -->
 <div class="section">
   <div class="section-title">📌 必带清单</div>
   <div class="card">
@@ -352,22 +317,9 @@
       <li>防风外套（海风大，洋葱穿法）</li>
       <li>折叠伞（4月中旬后常下雨）</li>
       <li>转换插头</li>
-      <li>现金韩元（传统市场用，大部分店支持支付宝）</li>
-      <li>Visa/Master芯片信用卡</li>
-    </ul>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-title">💬 评论区精华</div>
-  <div class="card">
-    <ul>
-      <li><strong>东线一天能玩完吗？</strong> — 7:30坐船去牛岛，3h下岛，走路去日出峰，午饭后去海滩，日落前到涉地可支</li>
-      <li><strong>住市区去西归浦方便吗？</strong> — 公交直达，很方便</li>
-      <li><strong>4月7-8号还有樱花吗？</strong> — 有晚樱，但别下雨就好，雨会加速落花</li>
-      <li><strong>清明假期人多吗？</strong> — 比国内景点人少</li>
-      <li><strong>带娃穿什么？</strong> — 三合一外套+卫衣，早晚冷</li>
-      <li><strong>汉拿山值得去吗？</strong> — 需一整天，早上6:00出发，春夏更适合，难度中等</li>
+      <li>现金韩元（传统市场用）</li>
+      <li>Visa/Master 芯片信用卡</li>
+      <li>流量卡（提前国内买好带过去，很便宜）</li>
     </ul>
   </div>
 </div>
@@ -378,12 +330,54 @@
 </div>
 
 <script>
-document.querySelectorAll('.accordion').forEach(el => {
-  el.addEventListener('click', () => {
-    el.classList.toggle('open');
-    el.nextElementSibling.classList.toggle('open');
-  });
+var map = L.map('map').setView([33.40, 126.65], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap',
+  maxZoom: 18
+}).addTo(map);
+
+var eastIcon = L.divIcon({className:'', html:'<div style="background:#ff6b9d;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">E</div>'});
+var southIcon = L.divIcon({className:'', html:'<div style="background:#4ecdc4;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">S</div>'});
+var flowerIcon = L.divIcon({className:'', html:'<div style="background:#ff9f43;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">F</div>'});
+var cityIcon = L.divIcon({className:'', html:'<div style="background:#6c5ce7;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,0.3);">C</div>'});
+
+var spots = [
+  // 东线 E
+  {lat:33.504,lng:126.955,icon:eastIcon,name:'牛岛 Udo',desc:'最美离岛，翡翠海蚀洞，7:30首班船'},
+  {lat:33.458,lng:126.940,icon:eastIcon,name:'城山日出峰',desc:'182m火山口，30min登顶，早上人少'},
+  {lat:33.453,lng:126.935,icon:eastIcon,name:'广峙其海滩',desc:'日出峰脚下的安静海滩'},
+  {lat:33.424,lng:126.931,icon:eastIcon,name:'涉地可支',desc:'韩剧取景地，白色灯塔，日落最美'},
+  {lat:33.543,lng:126.669,icon:eastIcon,name:'咸德海水浴场',desc:'果冻色海水，济州最美沙滩'},
+  {lat:33.555,lng:126.854,icon:eastIcon,name:'月汀里',desc:'果冻海+海边咖啡厅'},
+  // 南线 S
+  {lat:33.237,lng:126.425,icon:southIcon,name:'柱状节理带',desc:'火山岩柱群，门票2000韩元，风大'},
+  {lat:33.249,lng:126.563,icon:southIcon,name:'西归浦/偶来市场',desc:'南部小城，市场晚上逛吃'},
+  // 赏花 F
+  {lat:33.510,lng:126.530,icon:flowerIcon,name:'典农路',desc:'1.2km樱花隧道，有夜樱灯光'},
+  {lat:33.320,lng:126.350,icon:flowerIcon,name:'鹿山路',desc:'樱花+油菜花同框，8.5km公路'},
+  {lat:33.457,lng:126.562,icon:flowerIcon,name:'济州大学',desc:'樱花走廊，人少日系风'},
+  {lat:33.507,lng:126.529,icon:flowerIcon,name:'三姓穴',desc:'古建筑+古樱，门票4000韩元'},
+  {lat:33.495,lng:126.535,icon:flowerIcon,name:'新山公园',desc:'本地人野餐地，大樱花树'},
+  // 市区 C
+  {lat:33.510,lng:126.492,icon:cityIcon,name:'济州机场',desc:'非24小时！值机5:00开始'},
+  {lat:33.489,lng:126.531,icon:cityIcon,name:'宝健路(推荐住宿区)',desc:'交通方便，吃喝购物多'},
+  {lat:33.362,lng:126.533,icon:cityIcon,name:'汉拿山',desc:'需一整天，早6:00出发，难度中等'}
+];
+
+spots.forEach(function(s) {
+  L.marker([s.lat, s.lng], {icon: s.icon}).addTo(map)
+    .bindPopup('<b>'+s.name+'</b><br><span style="font-size:12px;color:#636e72;">'+s.desc+'</span>');
 });
+
+// 图例
+var legend = L.control({position:'bottomright'});
+legend.onAdd = function() {
+  var d = L.DomUtil.create('div');
+  d.style.cssText = 'background:#fff;padding:8px 10px;border-radius:8px;font-size:11px;box-shadow:0 2px 6px rgba(0,0,0,0.15);line-height:1.8;';
+  d.innerHTML = '<b>图例</b><br><span style="color:#ff6b9d;">E</span> 东线 <span style="color:#4ecdc4;">S</span> 南线<br><span style="color:#ff9f43;">F</span> 赏花 <span style="color:#6c5ce7;">C</span> 市区';
+  return d;
+};
+legend.addTo(map);
 </script>
 </body>
 </html>
