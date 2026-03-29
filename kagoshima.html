@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鹿儿岛4-5月旅行攻略</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root { --pink: #e74c3c; --blue: #3498db; --orange: #e67e22; --green: #27ae60; --bg: #fafafa; --card: #fff; --text: #2d3436; --muted: #636e72; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; max-width: 640px; margin: 0 auto; padding: 0 16px 80px; }
+  .hero { background: linear-gradient(135deg, #e74c3c 0%, #f39c12 50%, #3498db 100%); margin: 0 -16px; padding: 48px 24px 32px; text-align: center; color: #fff; }
+  .hero h1 { font-size: 26px; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .hero p { margin-top: 6px; font-size: 13px; opacity: 0.9; }
+  .section { margin-top: 28px; }
+  .section-title { font-size: 18px; font-weight: 700; padding: 10px 0; border-bottom: 3px solid var(--pink); display: inline-block; margin-bottom: 14px; }
+  .card { background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card h3 { font-size: 15px; color: var(--pink); margin-bottom: 8px; }
+  .card p, .card li { font-size: 14px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 4px; }
+  .tag { display: inline-block; background: #fdecea; color: var(--pink); padding: 2px 10px; border-radius: 12px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .tag.blue { background: #eaf4fd; color: var(--blue); }
+  .tag.green { background: #eafaf1; color: var(--green); }
+  .warn { background: #fff8e1; border-left: 4px solid #ffb300; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 8px; font-size: 13px; }
+  .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 8px; font-size: 13px; }
+  .comment { background: #f8f9fa; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 13px; }
+  .comment .author { color: var(--pink); font-weight: 600; font-size: 12px; }
+  .comment .text { margin-top: 4px; }
+  .day-badge { display: inline-block; background: var(--pink); color: #fff; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-size: 13px; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
+  .day-row { display: flex; align-items: flex-start; margin-bottom: 12px; }
+  .day-content { flex: 1; }
+  .day-content strong { font-size: 14px; }
+  .day-content span { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
+  #map { height: 360px; border-radius: 12px; margin: 12px 0; z-index: 1; }
+  .swiper { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; display: flex; gap: 8px; padding: 8px 0 12px; scrollbar-width: none; }
+  .swiper::-webkit-scrollbar { display: none; }
+  .swiper img { flex-shrink: 0; width: 75%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; scroll-snap-align: start; }
+  .swiper-label { position: relative; flex-shrink: 0; width: 75%; }
+  .swiper-label span { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 6px; }
+  .photo-caption { font-size: 11px; color: var(--muted); text-align: center; margin: -4px 0 8px; }
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cost-table th { text-align: left; padding: 8px; background: #fdecea; color: var(--pink); }
+  .cost-table td { padding: 8px; border-bottom: 1px solid #f0f0f0; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 5px 0; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+  .checklist li::before { content: "\2705 "; }
+  .footer { text-align: center; margin-top: 32px; padding: 16px; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🌋 鹿儿岛 4-5月攻略</h1>
+  <p>活火山旁的慢生活 · 综合小红书多篇高赞笔记</p>
+  <p>2026.03.29 by 小胖</p>
+</div>
+
+<!-- 地图 -->
+<div class="section">
+  <div class="section-title">🗺️ 景点地图</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">点击标记查看详情，颜色区分区域</p>
+  <div id="map"></div>
+</div>
+
+<!-- 最佳时间 -->
+<div class="section">
+  <div class="section-title">📅 4-5月出行</div>
+  <div class="card">
+    <h3>天气与特色</h3>
+    <ul>
+      <li><strong>4月初</strong> — 樱花季！高千穗牧场整片山头都是樱花</li>
+      <li><strong>4月中旬</strong> — 温暖舒适，20°C左右，适合户外</li>
+      <li><strong>5月</strong> — 新绿季，天气稳定，适合徒步和火山观光</li>
+      <li><strong>全年</strong> — 樱岛每年喷发数百次，随时可能看到喷发！</li>
+    </ul>
+  </div>
+  <div class="tip">穿搭：春装为主，樱岛/城山有风带防风外套。舒适的鞋子必备，一天走路较多。</div>
+</div>
+
+<!-- 行程推荐 -->
+<div class="section">
+  <div class="section-title">📋 推荐行程 (2-3天)</div>
+  <div class="card">
+    <div class="day-row">
+      <div class="day-badge">1</div>
+      <div class="day-content">
+        <strong>市区 + 仙岩园</strong>
+        <span>城山展望台(5PM看日落) → 仙岩园+御殿+猫神社(1.5-2h) → 天文馆通逛吃(黑猪肉/白熊冰)</span>
+      </div>
+    </div>
+    <div class="day-row">
+      <div class="day-badge">2</div>
+      <div class="day-content">
+        <strong>樱岛火山一日</strong>
+        <span>渡轮15min到樱岛 → 月读神社 → 熔岩足浴(免费!) → 汤之平展望台 → 返回市区看夜景</span>
+      </div>
+    </div>
+    <div class="day-row" style="margin-bottom:0">
+      <div class="day-badge">3</div>
+      <div class="day-content">
+        <strong>指宿 / 高千穗</strong>
+        <span>选A: JR指宿玉手箱号 → 砂蒸温泉 → 开闻岳<br>选B: 自驾高千穗牧场(1h) → 樱花季绝美</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 城山展望台 -->
+<div class="section">
+  <div class="section-title">🏔️ 城山展望台</div>
+  <div class="card">
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/kagoshima/note1_01.webp" alt="城山俯瞰"><span>俯瞰城市+樱岛喷发</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/shiroyama_1.webp" alt="城山海湾"><span>锦江湾+樱岛蓝天</span></div>
+    </div>
+    <p style="font-size:13px;">鹿儿岛市区最高点，俯瞰整个城市和樱岛火山。<strong>推荐5PM左右上山看日落</strong>，不同光线下景观完全不同。完全可以走路上去，不高。</p>
+  </div>
+  <div class="comment">
+    <div class="author">@凯尔文的怪品味 (353赞)</div>
+    <div class="text">推荐早晚各去一次，不同光线下的火山和城市景观完全不同，超级出片！乘坐巡游巴士可直达。</div>
+  </div>
+</div>
+
+<!-- 仙岩园 -->
+<div class="section">
+  <div class="section-title">🏯 仙岩园</div>
+  <div class="card">
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/kagoshima/note1_10.webp" alt="仙岩园庭院"><span>日式庭院+池塘</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/note1_07.webp" alt="仙岩园御殿"><span>御殿内部</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/note1_08.webp" alt="猫神社"><span>猫神社</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/note1_09.webp" alt="苔藓石阶"><span>绿荫石阶步道</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/senganeng_1.webp" alt="竹筒流水"><span>竹筒流水</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/senganeng_2.webp" alt="世界遗产标牌"><span>世界遗产标牌</span></div>
+    </div>
+    <p style="font-size:13px;">1658年藩主别墅，世界文化遗产。"借景"手法将樱岛火山融入庭园，<strong>御殿一定不要错过！</strong>后面的猫神社也很有意思。</p>
+    <p style="margin-top:4px;"><span class="tag">门票1600円(含御殿)</span> <span class="tag">JR Pass优惠100</span> <span class="tag">1.5-2h游览</span></p>
+  </div>
+  <div class="comment">
+    <div class="author">@潘达到处跑 (66赞)</div>
+    <div class="text">必去必去！！里面的御殿一定不要错过啊，那个庭院我可以坐着发呆一下午！后面还有猫神社也好有意思</div>
+  </div>
+  <p class="photo-caption">← 左右滑动查看更多 · 图源@凯尔文的怪品味 @creamyqiao</p>
+</div>
+
+<!-- 樱岛 -->
+<div class="section">
+  <div class="section-title">🌋 樱岛火山</div>
+  <div class="card">
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/kagoshima/sakurajima_grassfield.webp" alt="樱岛喷发"><span>草地上看樱岛喷发</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/sakurajima_footbath.webp" alt="樱岛足浴"><span>熔岩足浴+火山</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/hotel_volcano_sunset.webp" alt="酒店看樱岛"><span>酒店窗户看日落</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/note1_05.webp" alt="樱岛全岛地图"><span>全岛地图</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/note1_06.webp" alt="巴士路线"><span>巴士A/B线路线图</span></div>
+    </div>
+    <p style="font-size:13px;"><strong>必须上岛！</strong>渡轮15min，每15-20min一班，CUTE一日券包含。</p>
+    <ul style="font-size:13px;padding-left:16px;margin-top:6px;">
+      <li>码头出来逆时针走10min → 100m长免费露天足浴（日本最大）</li>
+      <li>汤之平展望台 — 离火山口最近的展望台</li>
+      <li>岛上公交只跑左侧小范围，外围需自驾</li>
+      <li>至少给半天时间</li>
+    </ul>
+  </div>
+  <div class="comment">
+    <div class="author">@潘达到处跑</div>
+    <div class="text">夕阳时分，一边看着海面波光，一边感受地壳的温度，真很奇特的体验。码头往返的船每15分钟一趟，CUTE券包含=免费！</div>
+  </div>
+  <div class="comment">
+    <div class="author">@评论区</div>
+    <div class="text">选晴天去！天气好体验会好很多。日落后坐渡轮回鹿儿岛，蓝调时刻超幸福。</div>
+  </div>
+</div>
+
+<!-- 美食 -->
+<div class="section">
+  <div class="section-title">🍽️ 美食</div>
+  <div class="card">
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/kagoshima/shirokuma.webp" alt="白熊冰"><span>天文馆白熊刨冰</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/kurobuta.webp" alt="黑猪肉"><span>鹿儿岛黑猪肉涮锅</span></div>
+      <div class="swiper-label"><img src="images/kagoshima/food_4grid.webp" alt="美食四宫格"><span>甜甜圈/白熊冰/炸猪排/黑猪肉</span></div>
+    </div>
+    <h3>天文馆通 — 美食一条街</h3>
+    <ul>
+      <li><strong>白熊刨冰</strong> — 鹿儿岛名物，超大份</li>
+      <li><strong>黑猪肉</strong> — 炸猪排(竹亭/六白亭) 或涮锅</li>
+      <li><strong>屋台村</strong> — 中央站步行5min，18家大排档，11:30-23:30</li>
+      <li>2000円海鲜盖饭(中央站)、炭烤地�的鸡</li>
+    </ul>
+  </div>
+  <div class="comment">
+    <div class="author">@潘达到处跑</div>
+    <div class="text">好吃的都在天文馆那一条街！炸黑豚比较有特色，外酥里嫩的。但人气高的店没有特别惊艳。</div>
+  </div>
+</div>
+
+<!-- 指宿 -->
+<div class="section">
+  <div class="section-title">♨️ 指宿 · 砂蒸温泉</div>
+  <div class="card">
+    <p style="font-size:13px;">日本唯一天然砂蒸温泉，300年历史。被火山地热加热的砂子覆盖全身，体验独特。</p>
+    <p style="margin-top:8px;font-size:13px;"><strong>交通：</strong>JR指宿玉手箱号从鹿儿岛中央站出发，车程约1h，列车本身就是打卡点（黑白双色车身）。</p>
+    <p style="margin-top:4px;"><span class="tag blue">建议安排1天</span> <span class="tag blue">可顺路看开闻岳</span></p>
+  </div>
+  <div class="warn">注意：下雨天不适合去指宿（砂蒸温泉和户外景点体验打折），出发前看天气。</div>
+</div>
+
+<!-- 高千穗牧场 -->
+<div class="section">
+  <div class="section-title">🌸 高千穗牧场</div>
+  <div class="card">
+    <p style="font-size:13px;">距鹿儿岛1h车程，<strong>强烈推荐樱花季去！</strong>一整片山头都是樱花，躺在草地上阳光明媚微风徐徐。物价良心，一人份牛排100多RMB。</p>
+    <p style="margin-top:4px;"><span class="tag green">4月初最佳</span> <span class="tag green">建议自驾</span></p>
+  </div>
+</div>
+
+<!-- 交通 -->
+<div class="section">
+  <div class="section-title">🚃 交通</div>
+  <div class="card">
+    <h3>CUTE一日券 — 必买！</h3>
+    <ul>
+      <li><strong>1日券1300円 / 2日券1900円</strong></li>
+      <li>包含：市电(有轨电车) + 市营公交 + City View观光巴士 + 樱岛渡轮 + 樱岛观光巴士</li>
+      <li>喜来登酒店一楼等多处有卖</li>
+      <li>只要去樱岛就划算</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>City View 观光巴士</h3>
+    <p style="font-size:13px;"><strong>单向环线：</strong>中央站 → 城山 → 仙岩园 → 水族馆前(渡轮) → 中央站</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:4px;">游览顺序也该按这个走！每30min一班。</p>
+  </div>
+  <div class="card">
+    <h3>其他交通</h3>
+    <ul>
+      <li><strong>市电</strong> — 粉蓝黄各色有轨电车，后门上前门下</li>
+      <li><strong>熊本 → 鹿儿岛</strong> — 新干线1h</li>
+      <li><strong>福冈 → 鹿儿岛</strong> — 新干线2.5h</li>
+      <li><strong>不能用西瓜卡</strong>，买CUTE券代替</li>
+    </ul>
+  </div>
+  <div class="tip">Google地图在鹿儿岛不太准，建议同时用Yahoo地图或Naver Map核对公交时间。</div>
+</div>
+
+<!-- 住宿 -->
+<div class="section">
+  <div class="section-title">🏨 住宿</div>
+  <div class="card">
+    <h3>推荐：喜来登 / Solaria</h3>
+    <p style="font-size:13px;"><strong>喜来登</strong> — 多人推荐，选樱岛景观房！坐在房里就能看火山喷发。位置好，隔壁100m有大超市。</p>
+    <p style="font-size:13px;margin-top:4px;"><strong>Solaria</strong> — 也能看樱岛，但房间偏小。</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px;">评论区：鹿儿岛房价很便宜，值得住2-3晚。</p>
+  </div>
+</div>
+
+<!-- 避雷 -->
+<div class="section">
+  <div class="section-title">⚠️ 避雷</div>
+  <div class="warn">不能用西瓜卡！买CUTE一日/两日券</div>
+  <div class="warn">樱岛公交只跑岛左侧小范围，外围大片区域需自驾或私立巴士（贵且不可控）</div>
+  <div class="warn">City View是单向环线，注意游览方向</div>
+  <div class="warn">樱岛天气多变，出行前看天气预报，晴天体验好很多</div>
+  <div class="warn">下雨天不要去指宿（砂蒸温泉体验差）</div>
+  <div class="warn">Google地图公交时间可能不准，Yahoo/Naver更靠谱</div>
+  <div class="warn">只玩鹿儿岛可能3天就够了，建议结合九州其他地方（熊本1h/福冈2.5h）</div>
+</div>
+
+<!-- 费用 -->
+<div class="section">
+  <div class="section-title">💰 费用参考</div>
+  <div class="card">
+    <table class="cost-table">
+      <tr><th>项目</th><th>费用</th></tr>
+      <tr><td>CUTE一日券</td><td>1300円(~65RMB)</td></tr>
+      <tr><td>仙岩园+御殿</td><td>1600円(~80RMB)</td></tr>
+      <tr><td>樱岛渡轮(单程)</td><td>200円(含在CUTE内)</td></tr>
+      <tr><td>天文馆通一餐</td><td>1000-3000円</td></tr>
+      <tr><td>海鲜盖饭(中央站)</td><td>2000円</td></tr>
+      <tr><td>高千穗牧场牛排</td><td>~100RMB/人</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 必带 -->
+<div class="section">
+  <div class="section-title">📌 必带清单</div>
+  <div class="card">
+    <ul class="checklist">
+      <li>护照（日本需签证，提前办好）</li>
+      <li>舒适鞋子（走路多）</li>
+      <li>防风外套（樱岛/城山有风）</li>
+      <li>防晒+墨镜+帽子</li>
+      <li>现金日元（部分小店只收现金）</li>
+      <li>西瓜卡不能用，到了买CUTE券</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <p>数据来源：小红书多篇高赞笔记 + 评论区实测</p>
+  <p>生成时间：2026-03-29 | by 小胖</p>
+</div>
+
+<script>
+var map = L.map('map').setView([31.45, 130.65], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, name, color) {
+  return L.divIcon({
+    className: '',
+    html: '<div style="display:flex;align-items:center;gap:4px;white-space:nowrap;">' +
+      '<div style="background:'+color+';color:#fff;border-radius:50%;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.3);">'+emoji+'</div>' +
+      '<span style="background:'+color+';color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;">'+name+'</span></div>',
+    iconAnchor: [14, 14]
+  });
+}
+
+var R='#e74c3c', B='#3498db', G='#27ae60', O='#e67e22';
+var spots = [
+  {lat:31.5993,lng:130.553,icon:makeIcon('🏔','城山展望台',R),name:'城山展望台',desc:'市区最高点<br>俯瞰城市+樱岛<br>推荐5PM看日落'},
+  {lat:31.613,lng:130.577,icon:makeIcon('🏯','仙岩园',R),name:'仙岩园',desc:'世界文化遗产<br>1658年藩主别墅<br>门票1600円含御殿'},
+  {lat:31.589,lng:130.556,icon:makeIcon('🍽','天文馆通',R),name:'天文馆通',desc:'美食一条街<br>白熊冰+黑猪肉'},
+  {lat:31.560,lng:130.542,icon:makeIcon('🚉','中央站',R),name:'鹿儿岛中央站',desc:'交通枢纽<br>屋台村步行5min'},
+  {lat:31.585,lng:130.601,icon:makeIcon('⛴','渡轮码头',B),name:'樱岛渡轮',desc:'15min到樱岛<br>每15-20min一班<br>CUTE券包含'},
+  {lat:31.592,lng:130.635,icon:makeIcon('🌋','汤之平',B),name:'汤之平展望台',desc:'离火山口最近<br>樱岛观光巴士可达'},
+  {lat:31.580,lng:130.610,icon:makeIcon('♨️','足浴',B),name:'熔岩足浴',desc:'100m长免费露天足浴<br>日本最大规模<br>码头步行10min'},
+  {lat:31.226,lng:130.634,icon:makeIcon('♨️','指宿',G),name:'指宿砂蒸温泉',desc:'日本唯一天然砂蒸<br>JR玉手箱号1h'},
+  {lat:31.205,lng:130.559,icon:makeIcon('⛰','开闻岳',G),name:'开闻岳',desc:'薩摩富士<br>海中沉睡的火山'},
+  {lat:31.885,lng:130.831,icon:makeIcon('🌸','牧场',O),name:'高千穗牧场',desc:'樱花季绝美！<br>自驾1h<br>牛排100RMB/人'}
+];
+
+spots.forEach(function(s) {
+  L.marker([s.lat, s.lng], {icon: s.icon}).addTo(map)
+    .bindPopup('<b>'+s.name+'</b><br><span style="font-size:12px;color:#636e72;">'+s.desc+'</span>');
+});
+
+// 路线
+var day1 = [[31.5993,130.553],[31.613,130.577],[31.589,130.556]];
+var day2 = [[31.560,130.542],[31.585,130.601],[31.580,130.610],[31.592,130.635]];
+L.polyline(day1, {color:R, weight:2, dashArray:'8,6', opacity:0.6}).addTo(map).bindPopup('Day1 市区路线');
+L.polyline(day2, {color:B, weight:2, dashArray:'8,6', opacity:0.6}).addTo(map).bindPopup('Day2 樱岛路线');
+
+var legend = L.control({position:'bottomright'});
+legend.onAdd = function() {
+  var d = L.DomUtil.create('div');
+  d.style.cssText = 'background:#fff;padding:8px 10px;border-radius:8px;font-size:11px;box-shadow:0 2px 6px rgba(0,0,0,0.15);line-height:1.8;';
+  d.innerHTML = '<b>图例</b><br><span style="color:#e74c3c;">●</span> 市区 <span style="color:#3498db;">●</span> 樱岛<br><span style="color:#27ae60;">●</span> 指宿 <span style="color:#e67e22;">●</span> 雾岛';
+  return d;
+};
+legend.addTo(map);
+</script>
+</body>
+</html>
