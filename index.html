@@ -116,6 +116,30 @@
   .checklist { list-style: none; padding: 0; }
   .checklist li { padding: 6px 0; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
   .checklist li::before { content: "✅ "; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .photo-grid img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+  .photo-full {
+    width: 100%;
+    border-radius: 12px;
+    margin: 12px 0;
+    object-fit: cover;
+  }
+  .photo-caption {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 4px;
+  }
   .footer {
     text-align: center;
     margin-top: 32px;
@@ -138,6 +162,9 @@
   <p style="margin-top:4px; font-size:12px;">2026.03.29 by 小胖</p>
 </div>
 
+<img src="images/hero.webp" class="photo-full" alt="济州岛攻略封面">
+<p class="photo-caption">图片来源：小红书 @Amber的背包日记</p>
+
 <div class="section">
   <div class="section-title">📅 最佳时间</div>
   <div class="card">
@@ -158,6 +185,14 @@
 
 <div class="section">
   <div class="section-title">🗺️ 推荐行程 (4天3晚)</div>
+
+  <div class="photo-grid">
+    <img src="images/east1.webp" alt="东线风景">
+    <img src="images/east2.webp" alt="东线海滩">
+    <img src="images/south2.webp" alt="南线风景">
+    <img src="images/city1.webp" alt="市区风景">
+  </div>
+  <p class="photo-caption">东线海岸 · 南线柱状节理 · 咸德海水浴场</p>
 
   <div class="card">
     <div class="day-row">
@@ -192,6 +227,12 @@
 </div>
 
 <div class="section">
+  <div class="photo-grid">
+    <img src="images/hike1.webp" alt="偶来小路徒步">
+    <img src="images/hike2.webp" alt="徒步风景">
+  </div>
+  <p class="photo-caption">偶来小路徒步 · 集盖章、看海、人文于一体</p>
+
   <div class="section-title">🌸 赏樱地 TOP 5</div>
 
   <div class="card">
@@ -234,6 +275,13 @@
 </div>
 
 <div class="section">
+  <div class="photo-grid">
+    <img src="images/south1.webp" alt="南线景色">
+    <img src="images/south3.webp" alt="西归浦">
+    <img src="images/city2.webp" alt="市区">
+  </div>
+  <p class="photo-caption">南线 · 西归浦 · 市区周边</p>
+
   <div class="section-title">⚠️ 避雷指南</div>
   <div class="warn">西线涯月邑打卡感重，多人建议跳过</div>
   <div class="warn">偶来市场开门晚，别一早去扑空</div>
