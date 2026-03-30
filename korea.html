@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五一韩国攻略 · 首尔+釜山5天</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#333;max-width:640px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#1a73e8 0%,#e91e63 100%);color:#fff;padding:48px 20px 36px;text-align:center}
+.hero h1{font-size:26px;margin-bottom:8px;letter-spacing:1px}
+.hero .sub{font-size:13px;opacity:0.85;line-height:1.6}
+.hero .tag{display:inline-block;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px;font-size:12px;margin-top:12px}
+#map{height:340px;width:100%;border-bottom:3px solid #1a73e8}
+.section{padding:20px 16px}
+.section h2{font-size:20px;margin-bottom:12px;padding-left:10px;border-left:4px solid #1a73e8}
+.section h3{font-size:16px;margin:16px 0 8px;color:#1a73e8}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.card h4{font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.card p,.card li{font-size:13px;line-height:1.8;color:#555}
+.card ul{padding-left:18px}
+.swiper{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;display:flex;gap:8px;padding:8px 0 12px;scrollbar-width:none}
+.swiper::-webkit-scrollbar{display:none}
+.swiper-label{position:relative;flex-shrink:0;width:75%}
+.swiper-label img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;scroll-snap-align:start}
+.swiper-label span{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.55);color:#fff;font-size:11px;padding:2px 8px;border-radius:6px}
+.day-tag{display:inline-block;background:#1a73e8;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin-bottom:8px}
+.warn{background:#fff3e0;border-left:3px solid #ff9800;padding:12px;border-radius:8px;margin-bottom:12px;font-size:13px;line-height:1.7}
+.tip{background:#e8f5e9;border-left:3px solid #4caf50;padding:12px;border-radius:8px;margin-bottom:12px;font-size:13px;line-height:1.7}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+th,td{padding:8px 6px;border:1px solid #e0e0e0;text-align:left}
+th{background:#f5f5f5;font-weight:600}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:6px 0;font-size:13px;border-bottom:1px solid #f0f0f0}
+.checklist li::before{content:'☐ ';color:#1a73e8}
+.footer{text-align:center;padding:24px 16px;font-size:11px;color:#999;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>🇰🇷 五一韩国攻略</h1>
+  <div class="sub">首尔 2天 + 釜山 3天 · 人均 3500-5000元</div>
+  <div class="tag">📍 小红书 6篇高赞笔记 + 2000条评论精华</div>
+</div>
+
+<div id="map"></div>
+
+<!-- 天气提醒 -->
+<div class="section">
+  <h2>🌤 五一天气</h2>
+  <div class="warn">
+    <strong>⚠️ 韩国五一也放假！</strong><br>
+    5.1劳动节 + 5.5儿童节 + 5.12佛诞日 + 周末 → 韩国本地人+中国游客叠加，人流堪比国内黄金周。<br>
+    <strong>气温：</strong>日均15°C，早晚风大，需要外套<br>
+    <strong>下雨概率高：</strong>"五天有四天下雨"，釜山天气不好体验打折
+  </div>
+</div>
+
+<!-- 行程推荐 -->
+<div class="section">
+  <h2>📅 5天行程</h2>
+
+  <div class="card">
+    <div class="day-tag">Day 1 · 首尔</div>
+    <h4>🏛 景福宫 → 青瓦台 → 明洞</h4>
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/seoul_4.webp" alt="景福宫"><span>景福宫勤政殿</span></div>
+      <div class="swiper-label"><img src="images/seoul_6.webp" alt="景福宫全景"><span>景福宫+北岳山</span></div>
+      <div class="swiper-label"><img src="images/seoul_5.webp" alt="景福宫雪景"><span>景福宫殿阁</span></div>
+    </div>
+    <ul>
+      <li>落地仁川 → 机场铁路到首尔站</li>
+      <li>银联活动领公交卡（T1到达大厅7-8号门）</li>
+      <li>景福宫（门票3000韩币），韩服可免费入场</li>
+      <li>守门将换岗仪式 10:00/13:00 各一场</li>
+      <li>青瓦台免费（需提前3天网上预约，周二不开）</li>
+      <li>晚上明洞逛吃 → 推荐元堂脊骨土豆汤</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="day-tag">Day 2 · 首尔 → 釜山</div>
+    <h4>🏘 北村韩屋村 → 弘大 → KTX到釜山</h4>
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/seoul_1.webp" alt="北村韩屋村"><span>北村韩屋村</span></div>
+      <div class="swiper-label"><img src="images/seoul_2.webp" alt="景福宫攻略"><span>景福宫&韩屋村</span></div>
+    </div>
+    <ul>
+      <li>上午：北村韩屋村（导航「北村文化中心」领地图）</li>
+      <li>弘大商圈 — 大头贴+人生四格+咖啡</li>
+      <li>下午 KTX 到釜山（约2.5h，250元/人）</li>
+      <li><strong>⚠️ KTX票五一极难买，需半夜蹲放票！</strong></li>
+      <li>Tips：选左侧靠窗看风景</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="day-tag">Day 3 · 釜山海线</div>
+    <h4>🚂 胶囊小火车 → 青沙浦 → 海上列车 → 白浅滩日落</h4>
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/busan_2.webp" alt="胶囊小火车"><span>胶囊小火车·海边</span></div>
+      <div class="swiper-label"><img src="images/busan_3.webp" alt="胶囊小火车站"><span>胶囊小火车·进站</span></div>
+      <div class="swiper-label"><img src="images/busan_7.webp" alt="白浅滩日落"><span>白浅滩·日落</span></div>
+      <div class="swiper-label"><img src="images/busan_8.webp" alt="咖啡厅樱花"><span>海边咖啡厅</span></div>
+    </div>
+    <ul>
+      <li>上午：天空胶囊小火车（尾浦→青沙浦）</li>
+      <li><strong>⚠️ 必须提前1个月在kkday预约！否则约不到</strong></li>
+      <li>中午：青沙浦海鲜 / 大建名家猪肉汤饭</li>
+      <li>下午：海上列车（36元/人）→ 松亭海水浴场</li>
+      <li>傍晚：白浅滩文化村看日落 + Thrill on the Mug咖啡厅</li>
+      <li>晚上：BIFF广场糖饼 → 广安里无人机秀</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="day-tag">Day 4 · 釜山文化</div>
+    <h4>🎨 甘川文化村 → 松岛缆车 → 游艇夜景</h4>
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/busan_4.webp" alt="甘川小王子"><span>甘川文化村·小王子</span></div>
+      <div class="swiper-label"><img src="images/busan_5.webp" alt="甘川俯瞰"><span>小王子俯瞰全村</span></div>
+      <div class="swiper-label"><img src="images/busan_6.webp" alt="甘川阶梯"><span>甘川彩色阶梯</span></div>
+      <div class="swiper-label"><img src="images/busan_9.webp" alt="192阶梯"><span>192阶梯小电车</span></div>
+    </div>
+    <ul>
+      <li>上午：192阶梯小电车（免费）→ 甘川文化村</li>
+      <li>拍小王子推荐去 Gamnae Byeolmaru 体育中心天台</li>
+      <li>中午：味赞王烤肉 / 南浦牛肉汤</li>
+      <li>下午：松岛缆车 / Skyline Luge（二选一）</li>
+      <li>晚上：Yacht G 游艇看广安里大桥（需预约）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="day-tag">Day 5 · 回程</div>
+    <h4>🏖 海云台 → X the Sky → 回程</h4>
+    <div class="swiper">
+      <div class="swiper-label"><img src="images/busan_10.webp" alt="广安里"><span>广安里大桥海景</span></div>
+    </div>
+    <ul>
+      <li>上午：海云台海水浴场 + X the Sky 100层观景台</li>
+      <li>或：南浦洞乐天超市光复店 购物</li>
+      <li>下午：KTX回首尔 / 直飞回国</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 费用 -->
+<div class="section">
+  <h2>💰 费用参考</h2>
+  <div class="card">
+    <table>
+      <tr><th>项目</th><th>费用/人</th><th>备注</th></tr>
+      <tr><td>机票往返</td><td>1000-1500</td><td>提前买！</td></tr>
+      <tr><td>住宿4晚</td><td>650-800</td><td>首尔170/晚，釜山160/晚</td></tr>
+      <tr><td>签证</td><td>400</td><td>单次，提前办</td></tr>
+      <tr><td>首尔↔釜山</td><td>130-250</td><td>大巴便宜/KTX快</td></tr>
+      <tr><td>釜山通行证48h</td><td>~200</td><td>含缆车/游艇/Luge等</td></tr>
+      <tr><td>胶囊小火车</td><td>100-200</td><td>kkday提前1月</td></tr>
+      <tr><td>餐饮5天</td><td>800-1200</td><td>人均一顿50-80</td></tr>
+      <tr><td>电话卡</td><td>50</td><td>淘宝LGU卡</td></tr>
+      <tr><td><strong>合计</strong></td><td><strong>3500-4800</strong></td><td>不含购物</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 省钱 -->
+<div class="section">
+  <h2>🎫 省钱神器：釜山通行证</h2>
+  <div class="tip">
+    <strong>Busan Visit Pass 48h（约200元）</strong><br>
+    ✅ 松岛缆车 · ✅ Yacht G游艇 · ✅ Skyline Luge<br>
+    ✅ X the Sky 100层 · ✅ 海边列车 · ✅ 汗蒸spa<br>
+    ✅ 釜山站领实体卡含6000韩元公交充值<br>
+    ⚠️ 胶囊小火车不含！需单独在kkday买<br>
+    💡 建议买72h版本，48h偏紧
+  </div>
+</div>
+
+<!-- 美食 -->
+<div class="section">
+  <h2>🍜 美食推荐</h2>
+  <div class="card">
+    <h4>首尔</h4>
+    <ul>
+      <li>高丽参鸡汤（世宗路店）— 景福宫附近经典</li>
+      <li>元堂脊骨土豆汤 — 明洞6号口步行3分钟</li>
+      <li>弘大咖啡厅 + 大头贴 + 人生四格</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>釜山（强烈推荐）</h4>
+    <ul>
+      <li>🥇 大建名家 — 猪肉汤饭，"超好喝！"</li>
+      <li>🥈 BIFF广场元祖糖饼 — 南浦洞必吃</li>
+      <li>☕ Thrill on the Mug — 全镜面海景咖啡，蓝调时刻必去</li>
+      <li>☕ BRONI — 灯塔海景咖啡，二三楼面海</li>
+      <li>🍖 味赞王烤肉(富平店) — 韩牛</li>
+      <li>🍳 Offon / Working Holiday — 海云台/广安里早午餐</li>
+      <li>🍰 Unbet — 麻糬舒芙蕾</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 避雷 -->
+<div class="section">
+  <h2>⚠️ 避雷汇总</h2>
+  <div class="card">
+    <ul>
+      <li>🔴 <strong>韩国五一也放假</strong>（5.1-5.6），人流和中国游客叠加</li>
+      <li>🔴 <strong>胶囊小火车约不到</strong> → 一定提前1个月在kkday买</li>
+      <li>🔴 <strong>KTX票抢手</strong> → 需半夜蹲放票，建议提前买</li>
+      <li>🔴 <strong>松岛缆车排队2h+</strong> → 用釜山通行证免排也要等</li>
+      <li>🟡 天气冷！日均15°C + 风大，带外套</li>
+      <li>🟡 下雨概率高，"釜山天气不好体验打折"</li>
+      <li>🟡 照片"根本没有这么蓝"，有滤镜成分</li>
+      <li>🟡 热门咖啡厅餐厅爆满，小红书同款可能吃不上</li>
+      <li>🟡 釜山景点分散，打车+堵车严重</li>
+      <li>🟢 导航用 <strong>Naver Map</strong>（不是高德/百度）</li>
+      <li>🟢 翻译用 <strong>Papago</strong>（拍照实时翻译）</li>
+      <li>🟢 地铁用 <strong>Subway App</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- 行前清单 -->
+<div class="section">
+  <h2>✅ 行前 Checklist</h2>
+  <div class="card">
+    <ul class="checklist">
+      <li>签证（提前办，出签后再买机票酒店）</li>
+      <li>机票（越早越便宜）</li>
+      <li>KTX票（首尔↔釜山，提前抢！）</li>
+      <li>胶囊小火车（kkday 提前1个月）</li>
+      <li>釜山通行证（建议72h版本）</li>
+      <li>电话卡（淘宝LGU卡，落地激活需1-3h）</li>
+      <li>tmoney交通卡（淘宝买含充值）</li>
+      <li>换韩元（国内银行预约 or 明洞换）</li>
+      <li>电子申报卡（网上提前填好，入境快）</li>
+      <li>衣物：外套必带！日均15°C，风大</li>
+      <li>下载：Naver Map + Papago + Subway App</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  数据来源：小红书 UGC 内容 · 更新于 2026-03-30<br>
+  6篇高赞笔记（4007/5296/2693/1110/1063/697赞）+ 2000+条评论<br>
+  Generated by 小胖 🤖
+</div>
+
+<script>
+var map = L.map('map').setView([35.8, 128.5], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, name, color) {
+  return L.divIcon({
+    className: '',
+    html: '<div style="display:flex;align-items:center;gap:4px;white-space:nowrap;"><div style="background:'+color+';color:#fff;border-radius:50%;width:28px;height:28px;text-align:center;line-height:28px;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,0.3);">'+emoji+'</div><span style="background:'+color+';color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;">'+name+'</span></div>',
+    iconAnchor: [14, 14]
+  });
+}
+
+// 首尔景点 (蓝色)
+var seoul = '#1a73e8';
+L.marker([37.5796, 126.977], {icon: makeIcon('🏛','景福宫',seoul)}).addTo(map).bindPopup('<b>景福宫</b><br>门票3000韩币<br>韩服可免费入场<br>换岗仪式10:00/13:00');
+L.marker([37.5879, 126.9748], {icon: makeIcon('🏠','青瓦台',seoul)}).addTo(map).bindPopup('<b>青瓦台</b><br>免费·需提前3天预约<br>周二不开');
+L.marker([37.5826, 126.9831], {icon: makeIcon('🏘','北村韩屋村',seoul)}).addTo(map).bindPopup('<b>北村韩屋村</b><br>导航北村文化中心领地图<br>8个最佳观景台');
+L.marker([37.5563, 126.9237], {icon: makeIcon('🎵','弘大',seoul)}).addTo(map).bindPopup('<b>弘大商圈</b><br>大头贴+人生四格+咖啡');
+L.marker([37.5609, 126.986], {icon: makeIcon('🛍','明洞',seoul)}).addTo(map).bindPopup('<b>明洞</b><br>购物+美食<br>推荐元堂脊骨土豆汤');
+
+// 釜山景点 (粉色)
+var busan = '#e91e63';
+L.marker([35.0977, 129.0324], {icon: makeIcon('🎨','甘川文化村',busan)}).addTo(map).bindPopup('<b>甘川文化村</b><br>小王子打卡<br>推荐体育中心天台拍全景');
+L.marker([35.1587, 129.1604], {icon: makeIcon('🏖','海云台',busan)}).addTo(map).bindPopup('<b>海云台海水浴场</b><br>韩国最佳海滩之一<br>X the Sky 100层观景台');
+L.marker([35.1531, 129.1187], {icon: makeIcon('🌉','广安里',busan)}).addTo(map).bindPopup('<b>广安里海水浴场</b><br>广安大桥夜景<br>无人机秀');
+L.marker([35.1583, 129.1803], {icon: makeIcon('🚂','胶囊小火车',busan)}).addTo(map).bindPopup('<b>青沙浦胶囊小火车</b><br>⚠️ 提前1个月kkday预约<br>釜山必打卡');
+L.marker([35.0788, 129.0195], {icon: makeIcon('🚡','松岛缆车',busan)}).addTo(map).bindPopup('<b>松岛海上缆车</b><br>⚠️ 排队2h+<br>含在釜山通行证内');
+L.marker([35.1034, 129.0342], {icon: makeIcon('🎬','BIFF广场',busan)}).addTo(map).bindPopup('<b>BIFF广场</b><br>元祖糖饼必吃');
+L.marker([35.1379, 129.1108], {icon: makeIcon('🌅','白浅滩',busan)}).addTo(map).bindPopup('<b>白浅滩文化村</b><br>日落看海发呆<br>Thrill on the Mug咖啡厅');
+L.marker([35.1011, 129.0324], {icon: makeIcon('🎢','192阶梯',busan)}).addTo(map).bindPopup('<b>192童话阶梯</b><br>免费小电车<br>彩色涂鸦楼梯');
+
+// 路线虚线
+var seoulRoute = [[37.5796,126.977],[37.5879,126.9748],[37.5826,126.9831],[37.5563,126.9237],[37.5609,126.986]];
+L.polyline(seoulRoute, {color:'#1a73e8',weight:2,dashArray:'8,8',opacity:0.6}).addTo(map);
+
+var busanRoute = [[35.1011,129.0324],[35.0977,129.0324],[35.1379,129.1108],[35.1531,129.1187],[35.1583,129.1803],[35.1587,129.1604]];
+L.polyline(busanRoute, {color:'#e91e63',weight:2,dashArray:'8,8',opacity:0.6}).addTo(map);
+
+// KTX 路线
+L.polyline([[37.5563,126.9237],[35.1587,129.1604]], {color:'#ff9800',weight:2,dashArray:'12,6',opacity:0.4}).addTo(map).bindPopup('KTX 首尔→釜山 约2.5h');
+</script>
+</body>
+</html>
